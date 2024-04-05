@@ -24,29 +24,29 @@ public class EmpleadoControlador {
 
     //Este metodo sirve para listar todos los empleados
     @GetMapping("/empleados") //Indica que es una petición GET
-    public List<Empleado> listarTodosLosEmpleados(){
+    public List<Empleado> listarTodosLosEmpleados() {
         return repositorio.findAll();
     }
 
     //Este metodo sirve para guardar el empleado
     @PostMapping("/empleados") //Indica que es una petición POST
-    public Empleado guardarEmpleado(@RequestBody Empleado empleado){
+    public Empleado guardarEmpleado(@RequestBody Empleado empleado) {
         return repositorio.save(empleado);
     }
 
     //Este metodo sirve para buscar un empleado utilizando su id
     @GetMapping("/empleados/{id}")
-    public ResponseEntity<Empleado> obtenerEmpleadoPorId(@PathVariable Long id){
+    public ResponseEntity<Empleado> obtenerEmpleadoPorId(@PathVariable Long id) {
         Empleado empleado = repositorio.findById(id)
-                .orElseThrow(()-> new ResourceNotFoundException("No existe el empleado con el ID: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("No existe el empleado con el ID: " + id));
         return ResponseEntity.ok(empleado);
     }
 
     //Este metodo sirve para actualizar un empleado
     @PutMapping("/empleados/{id}")//Indica que es una petición PUT
-    public ResponseEntity<Empleado> actualizarEmpleado(@PathVariable Long id, @RequestBody Empleado detallesEmpleado){
+    public ResponseEntity<Empleado> actualizarEmpleado(@PathVariable Long id, @RequestBody Empleado detallesEmpleado) {
         Empleado empleado = repositorio.findById(id)
-                .orElseThrow(()-> new ResourceNotFoundException("No existe el empleado con el ID: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("No existe el empleado con el ID: " + id));
 
         empleado.setNombre(detallesEmpleado.getNombre());
         empleado.setApellido(detallesEmpleado.getApellido());
@@ -59,13 +59,13 @@ public class EmpleadoControlador {
 
     //Este metodo sirve para eliminar un empleado
     @DeleteMapping("/empleados/{id}")//Indica que es una petición DELETE
-    public ResponseEntity<Map<String,Boolean>> eliminarEmpleado(@PathVariable Long id){
+    public ResponseEntity<Map<String, Boolean>> eliminarEmpleado(@PathVariable Long id) {
         Empleado empleado = repositorio.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No existe el empleado con el ID : " + id));
 
         repositorio.delete(empleado);
         Map<String, Boolean> respuesta = new HashMap<>();
-        respuesta.put("eliminar",Boolean.TRUE);
+        respuesta.put("eliminar", Boolean.TRUE);
         return ResponseEntity.ok(respuesta);
     }
 }

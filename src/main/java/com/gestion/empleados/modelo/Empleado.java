@@ -22,7 +22,8 @@ public class Empleado {
     private String email;
 
     //Constructor vacio
-    public Empleado(){}
+    public Empleado() {
+    }
 
     //Constructor con atributos
     public Empleado(Long id, String nombre, String apellido, String email) {
